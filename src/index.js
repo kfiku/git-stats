@@ -12,7 +12,7 @@ let allCommits = []
 gitDirsSearch(dir, (err, dirs) => {
   if (!err && dirs.length > 0) {
     let l = dirs.length
-    const dateFrom = format(subDays(new Date(), 31), 'YYYY-MM-DD')
+    const dateFrom = format(subDays(new Date(), 7), 'YYYY-MM-DD')
 
     console.log('#######################################')
     console.log('##')
@@ -83,7 +83,9 @@ function sumAllCommits (commits) {
     '-': 0,
     'Diff (+/-)': 0
   }
-  commitsByDeveloperArray.map(cbdKey => {
+
+  commitsByDeveloperArray
+  .map(cbdKey => {
     if (['GLTDocker', 'jenkins@multivlt.com'].indexOf(cbdKey) === -1) {
       const cbd = commitsByDeveloper[cbdKey]
       const changed = getChanged(cbd.commits)
@@ -106,6 +108,7 @@ function sumAllCommits (commits) {
 
   sums['Diff (+/-)'] = sums['+'] - sums['-']
 
+  tableData.sort((a, b) => a['+'] < b['+'])
   tableData.push()
   tableData.push(sums)
 
