@@ -20,7 +20,7 @@
   "dependencies": {
     "console.table": "^0.9.1",
     "date-fns": "^1.28.5",
-    "git-dirs-search": "^1.0.1",
+    "git-dirs-search": "^1.0.3",
     "simple-git": "^1.77.0"
   }
 }

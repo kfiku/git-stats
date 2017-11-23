@@ -1,15 +1,16 @@
 // const { join } = require('path')
+const { execSync } = require('child_process')
 const gitDirsSearch = require('git-dirs-search')
 const simpleGit = require('simple-git')
 const subDays = require('date-fns/sub_days')
 const format = require('date-fns/format')
 require('console.table')
 
-const dir = '/media/dev/www/casino/betor'
+const dirToSearch = '/media/dev/www/casino/betor/'
 
 let allCommits = []
 
-gitDirsSearch(dir, (err, dirs) => {
+gitDirsSearch(dirToSearch, (err, dirs) => {
   if (!err && dirs.length > 0) {
     let l = dirs.length
     const dateFrom = format(subDays(new Date(), 7), 'YYYY-MM-DD')
@@ -18,31 +19,55 @@ gitDirsSearch(dir, (err, dirs) => {
     console.log('##')
     console.log('## GIT STATS FROM:', dateFrom, 'TO NOW')
     console.log('##')
+    dirs.map(dir => console.log('## search in ', dir.replace(dirToSearch, './')))
+    console.log('##')
     console.log('#######################################')
     console.log('')
 
+
     dirs.map(dir => {
-      // console.log(dir)
-      const repo = simpleGit(dir)
-
-      repo.log({
-        '--since': dateFrom,
-        '--shortstat': true
-      }, (err, data) => {
-        if (err) {
-          throw err
-        }
-
-        allCommits = [...allCommits, ...data.all]
-
-        l--
-        if (l === 0) {
-          sumAllCommits(allCommits)
-        }
-      })
+      const logs = getCommits(dir, dateFrom)
+      allCommits = [...allCommits, ...logs]
     })
+
+    sumAllCommits(allCommits)
   }
 }, { ignores: ['node_modules'], maxDepth: 6 })
+
+
+function getCommits(dir, dateFrom) {
+  const logsString = execSync(`cd ${dir} && git log --since ${dateFrom} --shortstat`).toString()
+  const logsArray = logsString.split(/commit [a-z0-9]{40}/g)
+    .filter(s => s)
+    .map(s => s.trim())
+    .filter(s => s.indexOf('Merge') !== 0)
+    .map(getCommitFromLogStr)
+
+  return logsArray
+}
+
+function getCommitFromLogStr(logStr) {
+  const logArray = logStr
+    .split('\n')
+    .filter(s => s) // remove empty lines
+
+  const author = logArray[0].replace(/Author: +/, '')
+  const author_name = author.split('<')[0].trim();
+  const author_email = author.split('<')[1].replace('>', '')
+
+  const date = logArray[1].replace(/Date: +/, '')
+  const message = logArray[2].trim()
+  const stats = parseChanged(logArray[3])
+
+  if (!stats.deletions && !stats.filesChanged && !stats.insertions) {
+    throw new Error(`wrong parsing of ${logStr} to ${JSON.stringify(stats)}`)
+  }
+
+  return {
+    author_name, author_email,
+    date, message, stats
+  }
+}
 
 function findDevelopersInCommits (commits) {
   // console.log('commits len', commits.length);
@@ -53,8 +78,6 @@ function findDevelopersInCommits (commits) {
 
     if (key) {
       if (!commitsByDeveloper[key]) {
-        // console.log(key, c)
-        // console.log(key, Object.keys(commitsByDeveloper))
         commitsByDeveloper[key] = {
           author: key,
           commits: []
@@ -69,9 +92,9 @@ function findDevelopersInCommits (commits) {
 }
 
 function sumAllCommits (commits) {
-  // console.log('all commits: ', commits.length)
   const commitsByDeveloper = findDevelopersInCommits(commits)
-  // console.log(commitsByDeveloper);
+  // console.log(commitsByDeveloper['Michal Stryluk']);
+  // console.log(commitsByDeveloper['Adam Osyra']);
   const tableData = []
   const commitsByDeveloperArray = Object.keys(commitsByDeveloper)
 
@@ -97,7 +120,7 @@ function sumAllCommits (commits) {
 
       tableData.push({
         'Developer': `${cbd.author}`,
-        'Commits': changed.filesChanged,
+        'Commits': cbd.commits.length,
         'Files changed': changed.filesChanged,
         '+': changed.insertions,
         '-': changed.deletions,
@@ -116,9 +139,9 @@ function sumAllCommits (commits) {
 }
 
 function parseChanged (str) {
-  const filesChanged = str.match(/([0-9]+) files changed/)
-  const insertions = str.match(/([0-9]+) insertions/)
-  const deletions = str.match(/([0-9]+) deletions/)
+  const filesChanged = str.match(/([0-9]+) files? changed/)
+  const insertions = str.match(/([0-9]+) insertions?/)
+  const deletions = str.match(/([0-9]+) deletions?/)
 
   return {
     filesChanged: filesChanged ? Number(filesChanged[1]) : 0,
@@ -134,8 +157,7 @@ function getChanged (commits) {
     deletions: 0
   }
   commits.map(c => {
-    // console.log(c.hash)
-    const sum = parseChanged(c.hash)
+    const sum = c.stats
     sums.filesChanged += sum.filesChanged
     sums.insertions += sum.insertions
     sums.deletions += sum.deletions
