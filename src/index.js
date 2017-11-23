@@ -1,7 +1,6 @@
 // const { join } = require('path')
 const { execSync } = require('child_process')
 const gitDirsSearch = require('git-dirs-search')
-const simpleGit = require('simple-git')
 const subDays = require('date-fns/sub_days')
 const format = require('date-fns/format')
 require('console.table')
