@@ -9,7 +9,6 @@ const subDays = require('date-fns/sub_days')
 const format = require('date-fns/format')
 const sortBy = require('lodash/sortBy')
 const reverse = require('lodash/reverse')
-// console.log(sortBy);
 require('console.table')
 
 
