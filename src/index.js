@@ -1,37 +1,55 @@
+#! /usr/bin/env node
+
 // const { join } = require('path')
+const { resolve } = require('path')
+const { existsSync } = require('fs')
 const { execSync } = require('child_process')
 const gitDirsSearch = require('git-dirs-search')
 const subDays = require('date-fns/sub_days')
 const format = require('date-fns/format')
 require('console.table')
 
+
+// START
 var args = process.argv.slice(2);
-const dirToSearch = args[0];
+const dirsToSearch = args
+  // filter only existing dirs
+  .filter(dir => existsSync(dir))
+  .map(dir => resolve(dir))
+  ;
 
-gitDirsSearch(dirToSearch, (err, dirs) => {
-  if (!err && dirs.length > 0) {
-    let allCommits = []
-    let l = dirs.length
-    const dateFrom = format(subDays(new Date(), 7), 'YYYY-MM-DD')
+let allCommits = []
+let toDo = dirsToSearch.length
 
-    console.log('#######################################')
-    console.log('##')
-    console.log('## GIT STATS FROM:', dateFrom, 'TO NOW')
-    console.log('##')
-    dirs.map(dir => console.log('## search in ', dir.replace(dirToSearch, './')))
-    console.log('##')
-    console.log('#######################################')
-    console.log('')
+const dateFrom = format(subDays(new Date(), 7), 'YYYY-MM-DD')
+console.log('#######################################')
+console.log('##')
+console.log('## GIT STATS FROM:', dateFrom, 'TO NOW')
+console.log('##')
 
+dirsToSearch.forEach(dirToSearch => {
+  console.log('## search for repos in', dirToSearch)
+  gitDirsSearch(dirToSearch, (err, dirs) => {
+    toDo--;
+    if (!err && dirs.length > 0) {
+      let l = dirs.length
+      dirs.map(dir => console.log('## repo in', dir))
 
-    dirs.map(dir => {
-      const logs = getCommits(dir, dateFrom)
-      allCommits = [...allCommits, ...logs]
-    })
+      dirs.map(dir => {
+        const logs = getCommits(dir, dateFrom)
+        allCommits = [...allCommits, ...logs]
+      })
 
-    sumAllCommits(allCommits)
-  }
-}, { ignores: ['node_modules'], maxDepth: 6 })
+      if (toDo === 0) {
+        console.log('##')
+        console.log('#######################################')
+        console.log('')
+
+        sumAllCommits(allCommits)
+      }
+    }
+  }, { ignores: ['node_modules'], maxDepth: 6 })
+})
 
 
 function getCommits(dir, dateFrom) {
