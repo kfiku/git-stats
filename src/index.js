@@ -7,6 +7,9 @@ const { execSync } = require('child_process')
 const gitDirsSearch = require('git-dirs-search')
 const subDays = require('date-fns/sub_days')
 const format = require('date-fns/format')
+const sortBy = require('lodash/sortBy')
+const reverse = require('lodash/reverse')
+// console.log(sortBy);
 require('console.table')
 
 
@@ -53,14 +56,20 @@ dirsToSearch.forEach(dirToSearch => {
 
 
 function getCommits(dir, dateFrom) {
-  const logsString = execSync(`cd ${dir} && git log --since ${dateFrom} --shortstat`).toString()
-  const logsArray = logsString.split(/commit [a-z0-9]{40}/g)
-    .filter(s => s)
-    .map(s => s.trim())
-    .filter(s => s.indexOf('Merge') !== 0)
-    .map(getCommitFromLogStr)
+  try {
+    const logsString = execSync(`cd ${dir} && git log --since ${dateFrom} --shortstat`).toString()
+    const logsArray = logsString.split(/commit [a-z0-9]{40}/g)
+      .filter(s => s)
+      .map(s => s.trim())
+      .filter(s => s.indexOf('Merge') !== 0)
+      .map(getCommitFromLogStr);
 
-  return logsArray
+    return logsArray
+  } catch (e) {
+    console.log('error in repo:', dir)
+    // console.error(e);
+    return [];
+  }
 }
 
 function getCommitFromLogStr(logStr) {
@@ -149,11 +158,11 @@ function sumAllCommits (commits) {
 
   sums['Diff (+/-)'] = sums['+'] - sums['-']
 
-  tableData.sort((a, b) => a['+'] < b['+'])
-  tableData.push()
-  tableData.push(sums)
+  sorted = reverse(sortBy(tableData, ['+']))
+  sorted.push()
+  sorted.push(sums)
 
-  showResults(tableData)
+  showResults(sorted)
 }
 
 function parseChanged (str) {

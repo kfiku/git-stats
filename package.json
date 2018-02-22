@@ -23,6 +23,7 @@
   "dependencies": {
     "console.table": "^0.10.0",
     "date-fns": "^1.29.0",
-    "git-dirs-search": "^1.0.3"
+    "git-dirs-search": "^1.0.3",
+    "lodash": "^4.17.5"
   }
 }
