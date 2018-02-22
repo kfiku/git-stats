@@ -49,6 +49,7 @@ function getCommitFromLogStr(logStr) {
   const logArray = logStr
     .split('\n')
     .filter(s => s) // remove empty lines
+  const logArrayLen = logArray.length
 
   const author = logArray[0].replace(/Author: +/, '')
   const author_name = author.split('<')[0].trim();
@@ -56,7 +57,7 @@ function getCommitFromLogStr(logStr) {
 
   const date = logArray[1].replace(/Date: +/, '')
   const message = logArray[2].trim()
-  const stats = parseChanged(logArray[3])
+  const stats = parseChanged(logArray[logArrayLen-1])
 
   if (!stats.deletions && !stats.filesChanged && !stats.insertions) {
     throw new Error(`wrong parsing of ${logStr} to ${JSON.stringify(stats)}`)
