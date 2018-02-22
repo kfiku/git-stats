@@ -5,12 +5,12 @@ const subDays = require('date-fns/sub_days')
 const format = require('date-fns/format')
 require('console.table')
 
-const dirToSearch = '/media/dev/www/casino/betor/'
-
-let allCommits = []
+var args = process.argv.slice(2);
+const dirToSearch = args[0];
 
 gitDirsSearch(dirToSearch, (err, dirs) => {
   if (!err && dirs.length > 0) {
+    let allCommits = []
     let l = dirs.length
     const dateFrom = format(subDays(new Date(), 7), 'YYYY-MM-DD')
 
