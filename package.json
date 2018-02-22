@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/kfiku/git-stats#readme",
   "dependencies": {
-    "console.table": "^0.9.1",
-    "date-fns": "^1.28.5",
+    "console.table": "^0.10.0",
+    "date-fns": "^1.29.0",
     "git-dirs-search": "^1.0.3"
   }
 }
