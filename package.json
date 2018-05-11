@@ -1,13 +1,15 @@
 {
-  "name": "git-stats",
+  "name": "pigit-stats",
   "version": "1.0.0",
   "description": "node module to show git stats",
   "main": "src/index.js",
   "bin": {
-    "git-stats": "src/index.js"
+    "pigit-stats": "src/cli.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "lint": "eslint src"
   },
   "repository": {
     "type": "git",
@@ -21,9 +23,21 @@
   },
   "homepage": "https://github.com/kfiku/git-stats#readme",
   "dependencies": {
+    "commander": "^2.15.1",
     "console.table": "^0.10.0",
     "date-fns": "^1.29.0",
-    "git-dirs-search": "^1.0.3",
+    "git-dirs-search": "^1.1.1",
     "lodash": "^4.17.5"
+  },
+  "devDependencies": {
+    "@types/node": "^10.0.8",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-fp": "^2.3.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "jest": "^22.4.3"
   }
 }
