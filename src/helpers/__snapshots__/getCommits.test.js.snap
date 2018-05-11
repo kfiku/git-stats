@@ -1,0 +1,154 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getCommits multiple git logs 1`] = `
+Array [
+  Object {
+    "authorEmail": "kfiku.com@gmail.com",
+    "authorName": "Grzegorz Klimek",
+    "date": "Thu Feb 22 10:36:48 2018 +0100",
+    "message": "cleanup",
+    "stats": Object {
+      "deletions": 1,
+      "filesChanged": 1,
+      "insertions": 0,
+    },
+  },
+  Object {
+    "authorEmail": "john@localhost",
+    "authorName": "John Doe",
+    "date": "Thu Feb 22 10:36:32 2018 +0100",
+    "message": "move to lodash sortby",
+    "stats": Object {
+      "deletions": 13,
+      "filesChanged": 3,
+      "insertions": 28,
+    },
+  },
+  Object {
+    "authorEmail": "kfiku.com@gmail.com",
+    "authorName": "Grzegorz Klimek",
+    "date": "Thu Feb 22 10:19:33 2018 +0100",
+    "message": "add option to pass multiple dirs to search as args",
+    "stats": Object {
+      "deletions": 26,
+      "filesChanged": 1,
+      "insertions": 44,
+    },
+  },
+  Object {
+    "authorEmail": "john@localhost",
+    "authorName": "John Doe",
+    "date": "Thu Feb 22 10:19:11 2018 +0100",
+    "message": "add bin to link this cmd",
+    "stats": Object {
+      "deletions": 1,
+      "filesChanged": 1,
+      "insertions": 4,
+    },
+  },
+  Object {
+    "authorEmail": "kfiku.com@gmail.com",
+    "authorName": "Grzegorz Klimek",
+    "date": "Thu Feb 22 09:55:27 2018 +0100",
+    "message": "add option to use with command args",
+    "stats": Object {
+      "deletions": 3,
+      "filesChanged": 1,
+      "insertions": 3,
+    },
+  },
+  Object {
+    "authorEmail": "kfiku.com@gmail.com",
+    "authorName": "Grzegorz Klimek",
+    "date": "Thu Feb 22 09:55:02 2018 +0100",
+    "message": "update depts",
+    "stats": Object {
+      "deletions": 9,
+      "filesChanged": 2,
+      "insertions": 9,
+    },
+  },
+  Object {
+    "authorEmail": "kfiku.com@gmail.com",
+    "authorName": "Grzegorz Klimek",
+    "date": "Thu Feb 22 09:08:39 2018 +0100",
+    "message": "fix errors with multiline commits",
+    "stats": Object {
+      "deletions": 1,
+      "filesChanged": 1,
+      "insertions": 2,
+    },
+  },
+  Object {
+    "authorEmail": "jan@localhost",
+    "authorName": "Jan Kowalski",
+    "date": "Thu Nov 23 11:25:21 2017 +0100",
+    "message": "remove unuser depts",
+    "stats": Object {
+      "deletions": 24,
+      "filesChanged": 3,
+      "insertions": 1,
+    },
+  },
+  Object {
+    "authorEmail": "john@localhost",
+    "authorName": "John Doe",
+    "date": "Thu Nov 23 11:22:42 2017 +0100",
+    "message": "fix proper parsing and summit commit stats",
+    "stats": Object {
+      "deletions": 44,
+      "filesChanged": 3,
+      "insertions": 66,
+    },
+  },
+  Object {
+    "authorEmail": "kfiku.com@gmail.com",
+    "authorName": "Grzegorz Klimek",
+    "date": "Mon Oct 30 08:58:30 2017 +0100",
+    "message": "add sort by lines added",
+    "stats": Object {
+      "deletions": 2,
+      "filesChanged": 1,
+      "insertions": 5,
+    },
+  },
+  Object {
+    "authorEmail": "jan@localhost",
+    "authorName": "Jan Kowalski",
+    "date": "Thu Sep 28 16:25:31 2017 +0200",
+    "message": "first commit",
+    "stats": Object {
+      "deletions": 0,
+      "filesChanged": 5,
+      "insertions": 280,
+    },
+  },
+  Object {
+    "authorEmail": "kfiku.com@gmail.com",
+    "authorName": "Grzegorz Klimek",
+    "date": "Thu Sep 28 14:14:32 2017 +0200",
+    "message": "Initial commit",
+    "stats": Object {
+      "deletions": 0,
+      "filesChanged": 3,
+      "insertions": 82,
+    },
+  },
+]
+`;
+
+exports[`getCommits single git log result 1`] = `
+Array [
+  Object {
+    "authorEmail": "kfiku.com@gmail.com",
+    "authorName": "Grzegorz Klimek",
+    "date": "Thu Feb 22 10:36:48 2018 +0100",
+    "message": "cleanup",
+    "stats": Object {
+      "deletions": 1,
+      "filesChanged": 1,
+      "insertions": 0,
+    },
+  },
+]
+`;
