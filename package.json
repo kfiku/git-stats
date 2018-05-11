@@ -7,7 +7,7 @@
     "pigit-stats": "src/cli.js"
   },
   "scripts": {
-    "test": "jest",
+    "test": "npm run lint && jest --coverage",
     "test:watch": "jest --watchAll",
     "lint": "eslint src"
   },

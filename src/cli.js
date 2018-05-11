@@ -1,10 +1,6 @@
 #! /usr/bin/env node
 // @ts-check
 
-// const { join } = require('path')
-// const { execSync } = require('child_process')
-// const gitDirsSearch = require('git-dirs-search')
-// const format = require('date-fns/format')
 const { resolve } = require('path')
 const { existsSync } = require('fs')
 const sortBy = require('lodash/sortBy')
@@ -26,7 +22,7 @@ const dirsToSearch = args
   .filter(dir => existsSync(dir))
   .map(dir => resolve(dir))
 
-const dateFrom = subDays(new Date(), 100)
+const dateFrom = subDays(new Date(), 7)
 const dateTo = new Date()
 
 function sumTableData (tableData) {
