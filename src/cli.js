@@ -7,9 +7,8 @@ const sortBy = require('lodash/sortBy')
 const reverse = require('lodash/reverse')
 const subDays = require('date-fns/sub_days')
 
-const searchForGitDirs = require('./helpers/searchForGitDirs')
-const getCommits = require('./helpers/getCommits')
-const commitsByDevelopers = require('./helpers/commitsByDevelopers')
+const { developersCommitsInDates } = require('./index')
+
 require('console.table') // eslint-disable-line
 
 process.on('unhandledRejection', (err) => { // eslint-disable-line
@@ -49,14 +48,7 @@ function sumTableData (tableData) {
 
 // START
 async function start (dirsToSearch, dateFrom, dateTo) {
-  const dirs = await searchForGitDirs(dirsToSearch)
-  const commitsArray = await Promise.all(
-    dirs.map(dir =>
-      getCommits(dir, dateFrom, dateTo)
-    )
-  )
-  const commits = commitsArray.reduce((acc, current) => [...acc, ...current], [])
-  const developersCommits = commitsByDevelopers(commits)
+  const developersCommits = await developersCommitsInDates(dirsToSearch, dateFrom, dateTo)
 
   const tableData = Object.keys(developersCommits).map(developerEmail => {
     const dev = developersCommits[developerEmail]

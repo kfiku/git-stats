@@ -1,0 +1,6 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`exec should work fine 1`] = `
+"exec.js
+"
+`;
