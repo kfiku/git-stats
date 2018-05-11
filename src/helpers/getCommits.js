@@ -29,12 +29,10 @@ const filterNotEmpty = (s) => s
  * @returns {Promise<CommitObj[]>}
  */
 async function getCommits (dir, dateFrom, dateTo, exec = execFn) {
-  // console.log('gettingCommitsFrom', dir);
   const after = format(dateFrom, 'YYYY-MM-DD')
   const before = format(dateTo, 'YYYY-MM-DD')
   const logsString = await getCommitsStr(dir, after, before, exec)
   const logsArray = logsString.split(/commit [a-z0-9]{40}/g)
-  // console.log('gettingCommitsFrom', dir, 'found', logsArray.length);
 
   return logsArray
     .map(s => s && s.trim())
