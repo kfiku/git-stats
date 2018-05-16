@@ -1,7 +1,6 @@
 // @ts-check
 
 const format = require('date-fns/format')
-
 const execFn = require('./exec')
 
 const filterNotEmpty = (s) => s

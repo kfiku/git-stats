@@ -6,6 +6,7 @@ const { existsSync } = require('fs')
 const sortBy = require('lodash/sortBy')
 const reverse = require('lodash/reverse')
 const subDays = require('date-fns/sub_days')
+const format = require('date-fns/format')
 
 const { developersCommitsInDates } = require('./index')
 
@@ -48,7 +49,21 @@ function sumTableData (tableData) {
 
 // START
 async function start (dirsToSearch, dateFrom, dateTo) {
-  const developersCommits = await developersCommitsInDates(dirsToSearch, dateFrom, dateTo)
+  /* eslint-disable fp/no-unused-expression */
+  /* eslint-disable no-console */
+  console.log('####################')
+  console.log('## SEARCHING FOR COMMITS IN ' + dirsToSearch + ' IN DATES: ' + format(dateFrom, 'YYYY-MM-DD') + ' - ' + format(dateTo, 'YYYY-MM-DD'))
+
+  const developersCommits = await developersCommitsInDates(dirsToSearch, dateFrom, dateTo, (type, dirs) => {
+    console.log('####################')
+    console.log('## ' + type)
+    dirs.map(dir => console.log('## ' + dir))
+
+    return false
+  })
+
+  console.log('####################')
+  console.log('')
 
   const tableData = Object.keys(developersCommits).map(developerEmail => {
     const dev = developersCommits[developerEmail]

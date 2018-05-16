@@ -37,8 +37,12 @@ const commitsByDevelopers = require('./helpers/commitsByDevelopers')
  * @param {Date} dateTo
  * @returns {Promise<{any?: CommitsByDevelopersObj}>}
  */
-async function developersCommitsInDates (dirsToSearch, dateFrom, dateTo) {
+async function developersCommitsInDates (dirsToSearch, dateFrom, dateTo, progress) {
   const dirs = await searchForGitDirs(dirsToSearch)
+  if (progress) {
+    progress('DIRS', dirs) // eslint-disable-line fp/no-unused-expression
+  }
+
   const commitsArray = await Promise.all(
     dirs.map(dir =>
       getCommits(dir, dateFrom, dateTo)
