@@ -35,9 +35,10 @@ const commitsByDevelopers = require('./helpers/commitsByDevelopers')
  * @param {string[]} dirsToSearch
  * @param {Date} dateFrom
  * @param {Date} dateTo
+ * @param {any} progress
  * @returns {Promise<{any?: CommitsByDevelopersObj}>}
  */
-async function developersCommitsInDates (dirsToSearch, dateFrom, dateTo, progress) {
+async function developersCommitsInDates (dirsToSearch, dateFrom, dateTo, progress = false) {
   const dirs = await searchForGitDirs(dirsToSearch)
   if (progress) {
     progress('DIRS', dirs) // eslint-disable-line fp/no-unused-expression

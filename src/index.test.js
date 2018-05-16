@@ -9,7 +9,7 @@ jest.mock('./helpers/exec')
 
 describe('developersCommitsInDates', () => {
   it('should work fine', async () => {
-    const result = await developersCommitsInDates([''], new Date(), new Date(), () => {})
+    const result = await developersCommitsInDates([''], new Date(), new Date())
     expect(result).toMatchSnapshot()
   })
 })
