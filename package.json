@@ -9,7 +9,9 @@
   "scripts": {
     "test": "npm run lint && jest --coverage",
     "test:watch": "jest --watchAll",
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -27,7 +29,8 @@
     "console.table": "^0.10.0",
     "date-fns": "^1.29.0",
     "git-dirs-search": "^1.1.1",
-    "lodash": "^4.17.5"
+    "lodash": "^4.17.12",
+    "snyk": "^1.320.2"
   },
   "devDependencies": {
     "@types/node": "^10.0.8",
@@ -39,5 +42,6 @@
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.1.0",
     "jest": "^22.4.3"
-  }
+  },
+  "snyk": true
 }
