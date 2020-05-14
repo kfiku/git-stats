@@ -29,7 +29,7 @@
     "console.table": "^0.10.0",
     "date-fns": "^1.29.0",
     "git-dirs-search": "^1.1.1",
-    "lodash": "^4.17.12",
+    "lodash": "^4.17.15",
     "snyk": "^1.320.2"
   },
   "devDependencies": {
