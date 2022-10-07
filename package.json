@@ -10,7 +10,7 @@
     "test": "npm run lint && jest --coverage",
     "test:watch": "jest --watchAll",
     "lint": "eslint src",
-    "snyk-protect": "snyk protect",
+    "snyk-protect": "snyk-protect",
     "prepare": "npm run snyk-protect"
   },
   "repository": {
@@ -29,8 +29,8 @@
     "console.table": "^0.10.0",
     "date-fns": "^1.30.1",
     "git-dirs-search": "^1.1.1",
-    "lodash": "^4.17.17",
-    "snyk": "^1.425.4"
+    "lodash": "^4.17.21",
+    "@snyk/protect": "latest"
   },
   "devDependencies": {
     "@types/node": "^10.0.8",
